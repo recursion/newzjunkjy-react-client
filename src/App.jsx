@@ -1,13 +1,12 @@
 import React from "react";
-import useAuth, { logOut } from "./components/Auth/auth";
 import { BrowserRouter as Router, Link, Route } from "react-router-dom";
 import SignIn from "./components/Auth/SignIn";
 import SignUp from "./components/Auth/SignUp";
-
+import useAuth from "./components/Auth/auth";
 // const apiServer = "http://192.168.88.205:4000";
 
 const App = () => {
-  const loggedIn = useAuth();
+  const [isAuthenticated, logIn, logOut] = useAuth();
 
   return (
     <Router>
@@ -16,7 +15,7 @@ const App = () => {
           <h1>NewzJunky</h1>
         </Link>
         <nav>
-          {!loggedIn ? (
+          {!isAuthenticated ? (
             <>
               <Link to="signIn">{"Sign In"}</Link>
               <Link to="signUp">{"Sign Up"}</Link>
@@ -28,7 +27,7 @@ const App = () => {
       </header>
       <section>
         <Route exact={true} path="/" render={() => <h1>News and Stuff</h1>} />
-        <Route path="/signIn" component={SignIn} />
+        <Route path="/signIn" component={() => <SignIn logIn={logIn} />} />
         <Route path="/signUp" component={SignUp} />
       </section>
     </Router>
