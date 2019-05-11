@@ -6081,10 +6081,16 @@ table {
   z-index: auto;
 }
 
-/* Your custom CSS here */
+/* Text Shadow */
+
+.shadow-basic {
+  text-shadow: .03em .03em black;
+}
+
+/* Loading Spinner */
 
 .spinner {
-  border: 3px solid hsla(185, 100%, 62%, .2);
+  border: .05em solid hsla(185, 100%, 62%, .2);
   border-top-color: #3cefff;
   border-radius: 50%;
   width: 3em;

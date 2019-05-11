@@ -1,27 +1,31 @@
-import { useState, useEffect } from "react";
+import { useReducer, useEffect } from "react";
+import { LOGGING_IN, LOG_IN, LOG_OUT } from "./constants";
+import { reducer, initialState } from "./reducer";
+import { error, success } from "./actions";
 const apiServer = "http://192.168.88.200:4000/api/v1/";
 
 function useAuth(props) {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  //const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [authentication, dispatch] = useReducer(reducer, initialState);
 
   useEffect(() => {
     const handleAuthenticationChange = e => {
       if (e.detail.key === "authToken") {
         if (e.detail.newValue === "") {
           // logged out
-          setIsAuthenticated(false);
+          dispatch({ type: LOG_OUT });
         } else {
           // logged in
-          setIsAuthenticated(true);
+          dispatch({ type: LOG_IN });
         }
       }
     };
 
     const token = window.localStorage.getItem("authToken");
     if (token) {
-      setIsAuthenticated(true);
+      dispatch({ type: LOG_IN });
     } else {
-      setIsAuthenticated(false);
+      dispatch({ type: LOG_OUT });
     }
 
     window.addEventListener("storage", handleAuthenticationChange);
@@ -31,6 +35,7 @@ function useAuth(props) {
   }, []);
 
   const logIn = async (email, password) => {
+    dispatch({ type: LOGGING_IN });
     try {
       const result = await fetch(`${apiServer}sign_in`, {
         method: "POST",
@@ -44,8 +49,7 @@ function useAuth(props) {
         })
       });
       if (result.status !== 200) {
-        console.log(result.status);
-        console.log(result.statusText);
+        dispatch(error(result));
       } else {
         window.localStorage.setItem("authToken", result.jwt);
         window.dispatchEvent(
@@ -53,19 +57,23 @@ function useAuth(props) {
             detail: { key: "authToken", newValue: result.jwt }
           })
         );
+        dispatch(success(result.response));
       }
     } catch (e) {
-      console.error("Tough Nuggies: ", e);
+      dispatch(error(null, e));
     }
   };
 
   const logOut = () => {
+    dispatch({ type: LOG_OUT });
     window.localStorage.setItem("authToken", "");
     window.dispatchEvent(
-      new CustomEvent("storage", { detail: { key: "authToken", newValue: "" } })
+      new CustomEvent("storage", {
+        detail: { key: "authToken", newValue: "" }
+      })
     );
   };
-  return [isAuthenticated, logIn, logOut];
+  return [authentication, logIn, logOut];
 }
 
 export default useAuth;

@@ -1,9 +1,14 @@
 @tailwind preflight;
 @tailwind utilities;
 
-/* Your custom CSS here */
+/* Text Shadow */
+.shadow-basic {
+  text-shadow: 0.03em 0.03em black;
+}
+
+/* Loading Spinner */
 .spinner {
-  border: 3px solid hsla(185, 100%, 62%, 0.2);
+  border: 0.05em solid hsla(185, 100%, 62%, 0.2);
   border-top-color: #3cefff;
   border-radius: 50%;
   width: 3em;
