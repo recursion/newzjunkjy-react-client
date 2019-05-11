@@ -3612,6 +3612,10 @@ table {
   min-height: 100vh;
 }
 
+.min-h-ch {
+  min-height: 90vh;
+}
+
 .min-w-0 {
   min-width: 0;
 }
@@ -6078,6 +6082,21 @@ table {
 }
 
 /* Your custom CSS here */
+
+.spinner {
+  border: 3px solid hsla(185, 100%, 62%, .2);
+  border-top-color: #3cefff;
+  border-radius: 50%;
+  width: 3em;
+  height: 3em;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
 
 @media (min-width: 576px) {
   .sm\:list-reset {
@@ -9199,6 +9218,10 @@ table {
 
   .sm\:min-h-screen {
     min-height: 100vh;
+  }
+
+  .sm\:min-h-ch {
+    min-height: 90vh;
   }
 
   .sm\:min-w-0 {
@@ -14773,6 +14796,10 @@ table {
     min-height: 100vh;
   }
 
+  .md\:min-h-ch {
+    min-height: 90vh;
+  }
+
   .md\:min-w-0 {
     min-width: 0;
   }
@@ -20345,6 +20372,10 @@ table {
     min-height: 100vh;
   }
 
+  .lg\:min-h-ch {
+    min-height: 90vh;
+  }
+
   .lg\:min-w-0 {
     min-width: 0;
   }
@@ -25915,6 +25946,10 @@ table {
 
   .xl\:min-h-screen {
     min-height: 100vh;
+  }
+
+  .xl\:min-h-ch {
+    min-height: 90vh;
   }
 
   .xl\:min-w-0 {
