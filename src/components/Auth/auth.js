@@ -2,10 +2,9 @@ import { useReducer, useEffect } from "react";
 import { LOGGING_IN, LOG_IN, LOG_OUT } from "./constants";
 import { reducer, initialState } from "./reducer";
 import { error, success } from "./actions";
-const apiServer = "http://192.168.88.200:4000/api/v1/";
+import { apiServer } from "../../config";
 
 function useAuth(props) {
-  //const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [authentication, dispatch] = useReducer(reducer, initialState);
 
   useEffect(() => {
