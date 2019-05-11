@@ -50,12 +50,7 @@ function useAuth(props) {
       if (result.status !== 200) {
         dispatch(error(result));
       } else {
-        window.localStorage.setItem("authToken", result.jwt);
-        window.dispatchEvent(
-          new CustomEvent("storage", {
-            detail: { key: "authToken", newValue: result.jwt }
-          })
-        );
+        setToken(result.jwt);
         dispatch(success(result.response));
       }
     } catch (e) {
@@ -65,14 +60,26 @@ function useAuth(props) {
 
   const logOut = () => {
     dispatch({ type: LOG_OUT });
-    window.localStorage.setItem("authToken", "");
-    window.dispatchEvent(
-      new CustomEvent("storage", {
-        detail: { key: "authToken", newValue: "" }
-      })
-    );
+    removeToken();
   };
   return [authentication, logIn, logOut];
 }
+
+export const setToken = token => {
+  window.localStorage.setItem("authToken", token);
+  window.dispatchEvent(
+    new CustomEvent("storage", {
+      detail: { key: "authToken", newValue: token }
+    })
+  );
+};
+export const removeToken = () => {
+  window.localStorage.setItem("authToken", "");
+  window.dispatchEvent(
+    new CustomEvent("storage", {
+      detail: { key: "authToken", newValue: "" }
+    })
+  );
+};
 
 export default useAuth;

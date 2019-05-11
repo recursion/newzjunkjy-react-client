@@ -3,6 +3,7 @@ import { Link, Redirect } from "react-router-dom";
 import useRequest from "../Request";
 import { apiServer } from "../../config";
 import { FETCHING, SUCCESS } from "../Request/constants";
+import { setToken } from "./auth";
 
 const options = {
   method: "POST",
@@ -34,7 +35,10 @@ const SignUp = () => {
 
   const [requestState, makeRequest] = useRequest(apiServer);
 
-  if (requestState.status === SUCCESS) return <Redirect to="/" />;
+  if (requestState.status === SUCCESS) {
+    setToken(requestState.response.jwt);
+    return <Redirect to="/" />;
+  }
 
   return (
     <div className="bg-grey-lighter min-h-ch flex flex-col">
@@ -81,7 +85,6 @@ const SignUp = () => {
                 password,
                 password_confirmation
               );
-              debugger;
               makeRequest(r);
             }}
             className={`w-full text-center py-3 rounded bg-green text-white hover:bg-green-dark focus:outline-none my-1`}
