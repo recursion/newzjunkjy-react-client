@@ -33,7 +33,7 @@ const SignUp = () => {
   const [password, setPassword] = useState(null);
   const [password_confirmation, setPasswordConfirmation] = useState(null);
 
-  const [requestState, makeRequest] = useRequest(apiServer);
+  const [requestState, makeRequest] = useRequest(`${apiServer}sign_up`);
 
   if (requestState.status === SUCCESS) {
     setToken(requestState.response.jwt);
