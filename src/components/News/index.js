@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import useRequest from "../Request";
 import { FETCHING, SUCCESS } from "../Request/constants";
-import { API_KEY } from "../../config";
-const add = `https://newsapi.org/v2/top-headlines?country=us&category=business&apiKey=${API_KEY}`;
+import { apiServer } from "../../config";
+// const add = `https://newsapi.org/v2/top-headlines?country=us&category=business&apiKey=${API_KEY}`;
+const add = `${apiServer}stories`;
 
 const News = () => {
   const [requestState, makeRequest] = useRequest(add);
@@ -20,7 +21,7 @@ const News = () => {
         requestState.body.status === "error" ? (
           <div>{requestState.body.message}</div>
         ) : (
-          !stories && setStories(requestState.body.articles)
+          !stories && setStories(requestState.body.data)
         )
       ) : (
         <div />
@@ -33,7 +34,12 @@ const News = () => {
       {stories && (
         <div>
           {stories.map(s => (
-            <div>{s.title}</div>
+            <div
+              className="my-3 p-2 border border-black rounded"
+              key={`:-:${s.title}`}
+            >
+              {s.title}
+            </div>
           ))}
         </div>
       )}

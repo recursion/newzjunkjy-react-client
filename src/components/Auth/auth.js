@@ -47,10 +47,11 @@ function useAuth(props) {
           password
         })
       });
+      const body = await result.json();
       if (result.status !== 200) {
         dispatch(error(result));
       } else {
-        setToken(result.jwt);
+        setToken(body.jwt);
         dispatch(success(result.response));
       }
     } catch (e) {

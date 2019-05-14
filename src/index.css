@@ -6081,6 +6081,13 @@ table {
   z-index: auto;
 }
 
+:root {
+  --text-primary: @apply text-grey-darker;
+  --text-secondary: @apply text-grey-lighter;
+  --primary-bg: @apply grey-darker;
+  --secondary-bg: @apply grey-lighter;
+}
+
 /* Text Shadow */
 
 .shadow-basic {
@@ -6102,6 +6109,16 @@ table {
   to {
     transform: rotate(360deg);
   }
+}
+
+/* Colors */
+
+.txt-primary {
+  color: var(--text-primary);
+}
+
+.color-primary {
+  background-color: var(--primary-bg);
 }
 
 @media (min-width: 576px) {
